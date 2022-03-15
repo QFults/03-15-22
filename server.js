@@ -10,7 +10,17 @@ app.get('/contact', (req, res) => {
 })
 
 app.get('/test', (req, res) => {
-  res.send('It is working!')
+  res.send('<button>It is working!</button>')
+})
+
+const person = {
+  name: 'John Doe',
+  age: 40,
+  email: 'johndoe@gmail.com'
+}
+
+app.get('/person', (req, res) => {
+  res.json(person)
 })
 
 app.listen(3000)
