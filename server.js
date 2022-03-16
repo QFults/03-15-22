@@ -56,4 +56,9 @@ app.get('/positions', (req, res) => {
   res.json(roles)
 })
 
+app.post('/positions', (req, res) => {
+  console.log(req.rawHeaders)
+  console.log(req.method)
+})
+
 app.listen(3000)
