@@ -4,6 +4,8 @@ const { join } = require('path')
 const app = express()
 
 app.use(express.static(join(__dirname, 'public')))
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
 
 // app.get('/contact', (req, res) => {
 //   res.sendFile(join(__dirname, 'public', 'contact.html'))
@@ -37,10 +39,6 @@ const roles = [
     salary: 60000
   },
   {
-    title: 'Assistant',
-    salary: 30000
-  },
-  {
     title: 'Intern',
     salary: 0
   }
@@ -57,8 +55,18 @@ app.get('/positions', (req, res) => {
 })
 
 app.post('/positions', (req, res) => {
-  console.log(req.rawHeaders)
-  console.log(req.method)
+  // console.log(req.rawHeaders)
+  // console.log(req.method)
+  if (!req.body.title) {
+    return res.json('Please enter a valid position with a title.')
+  } else {
+    if (!req.body.salary) {
+      req.body.salary = 0
+    }
+    console.log(req.body)
+    roles.push(req.body)
+    res.json(`${req.body.title} position successfully stored!`)
+  }
 })
 
 app.listen(3000)
