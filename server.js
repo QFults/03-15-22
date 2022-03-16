@@ -52,4 +52,8 @@ app.get('/position/:role', (req, res) => {
   res.json(position)
 })
 
+app.get('/positions', (req, res) => {
+  res.json(roles)
+})
+
 app.listen(3000)

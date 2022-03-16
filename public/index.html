@@ -11,6 +11,30 @@
 
 <body>
   <h1>Hello World!</h1>
+  <div id="positions"></div>
+  <script>
+
+    async function getPositions () {
+      const response = await fetch('/positions')
+      return response.json()
+    }
+
+    getPositions()
+      .then(positions => {
+        console.log(positions)
+        positions.forEach(({ title, salary }) => {
+          const positionElem = document.createElement('div')
+          positionElem.innerHTML = `
+            <h3>${title}</h3>
+            <h4>${salary}</h4>
+            <hr>
+          `
+          document.getElementById('positions').append(positionElem)
+        })
+      })
+      .catch(err => console.error(err))
+
+  </script>
 </body>
 
 </html>
