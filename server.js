@@ -1,3 +1,4 @@
+const { writeFile, readFile } = require('fs')
 const express = require('express')
 const { join } = require('path')
 
@@ -25,33 +26,17 @@ app.use(express.json())
 //   res.json(person)
 // })
 
-const roles = [
-  {
-    title: 'Boss',
-    salary: 500000
-  },
-  {
-    title: 'Manager',
-    salary: 100000
-  },
-  {
-    title: 'Employee',
-    salary: 60000
-  },
-  {
-    title: 'Intern',
-    salary: 0
-  }
-]
-
 // role -> boss, manager, employee, intern
-app.get('/position/:role', (req, res) => {
-  const position = roles.filter(role => role.title.toLowerCase() === req.params.role.toLowerCase())[0]
-  res.json(position)
-})
+// app.get('/position/:role', (req, res) => {
+//   const position = roles.filter(role => role.title.toLowerCase() === req.params.role.toLowerCase())[0]
+//   res.json(position)
+// })
 
 app.get('/positions', (req, res) => {
-  res.json(roles)
+  readFile(join(__dirname, 'db', 'positions.json'), 'utf8', (err, data) => {
+    if (err) { console.log(err) }
+    res.json(JSON.parse(data))
+  })
 })
 
 app.post('/positions', (req, res) => {
@@ -63,9 +48,16 @@ app.post('/positions', (req, res) => {
     if (!req.body.salary) {
       req.body.salary = 0
     }
-    console.log(req.body)
-    roles.push(req.body)
-    res.json(req.body)
+    readFile(join(__dirname, 'db', 'positions.json'), 'utf8', (err, data) => {
+      if (err) { console.log(err) }
+      const positions = JSON.parse(data)
+      positions.push(req.body)
+      writeFile(join(__dirname, 'db', 'positions.json'), JSON.stringify(positions), err => {
+        if (err) { console.log(err) }
+        res.json(req.body)
+      })
+    })
+    // writeFile('')
   }
 })
 

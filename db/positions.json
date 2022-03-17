@@ -1,0 +1,22 @@
+[
+  {
+    "title": "Boss",
+    "salary": 500000
+  },
+  {
+    "title": "Manager",
+    "salary": 100000
+  },
+  {
+    "title": "Employee",
+    "salary": 60000
+  },
+  {
+    "title": "Intern",
+    "salary": 0
+  },
+  {
+    "title": "Volunteer",
+    "salary": 0
+  }
+]
