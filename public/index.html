@@ -11,6 +11,17 @@
 
 <body>
   <h1>Hello World!</h1>
+  <form>
+    <p>
+      <label for="title">Position Title</label>
+      <input type="text" name="title" id="title">
+    </p>
+    <p>
+      <label for="salary">Salary</label>
+      <input type="number" name="salary" id="salary">
+    </p>
+    <button id="addPosition">Add Position</button>
+  </form>
   <div id="positions"></div>
   <script>
 
@@ -19,20 +30,44 @@
       return response.json()
     }
 
-    getPositions()
-      .then(positions => {
-        console.log(positions)
-        positions.forEach(({ title, salary }) => {
-          const positionElem = document.createElement('div')
-          positionElem.innerHTML = `
+    async function addPosition (position) {
+      const response = await fetch('/positions', {
+        method: 'POST',
+        body: JSON.stringify(position),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      return response.json()
+    }
+
+    const createPosition = ({ title, salary }) => {
+      const positionElem = document.createElement('div')
+      positionElem.innerHTML = `
             <h3>${title}</h3>
             <h4>${salary}</h4>
             <hr>
           `
-          document.getElementById('positions').append(positionElem)
-        })
+      return positionElem
+    }
+
+    getPositions()
+      .then(positions => {
+        console.log(positions)
+        positions.forEach(position => document.getElementById('positions').append(createPosition(position)))
       })
       .catch(err => console.error(err))
+
+    document.getElementById('addPosition').addEventListener('click', event => {
+      event.preventDefault()
+
+      addPosition({
+          title: document.getElementById('title').value,
+          salary: document.getElementById('salary').value
+        })
+        .then(position => position.title ? document.getElementById('positions').append(createPosition(position)) : alert('Invalid Position. Please Enter A Title'))
+        .catch(err => console.error(err))
+    })
 
   </script>
 </body>

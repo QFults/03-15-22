@@ -57,15 +57,15 @@ app.get('/positions', (req, res) => {
 app.post('/positions', (req, res) => {
   // console.log(req.rawHeaders)
   // console.log(req.method)
-  if (!req.body.title) {
-    return res.json('Please enter a valid position with a title.')
+  if (req.body.title.length < 1) {
+    return res.json({})
   } else {
     if (!req.body.salary) {
       req.body.salary = 0
     }
     console.log(req.body)
     roles.push(req.body)
-    res.json(`${req.body.title} position successfully stored!`)
+    res.json(req.body)
   }
 })
 
