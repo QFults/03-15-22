@@ -23,4 +23,4 @@ app.use(require('./routes'))
 //   res.json(person)
 // })
 
-app.listen(3000)
+app.listen(process.env.PORT || 3000)
