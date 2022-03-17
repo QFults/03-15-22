@@ -38,7 +38,8 @@
           'Content-Type': 'application/json'
         }
       })
-      return response.json()
+      const data = response.json()
+      return data
     }
 
     const createPosition = ({ title, salary }) => {

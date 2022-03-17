@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/QFults/03-15-22#readme",
   "dependencies": {
-    "express": "^4.17.3"
+    "express": "^4.17.3",
+    "uid": "^2.0.0"
   }
 }
